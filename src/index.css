@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+
+body,button,input{
+    font-family: "Josefin Sans", serif;
+}
+
+body{
+    max-height: 100vh;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
+/*g-input*/
+.g-input-container{
+    width: 100%;
+}
+
+.g-input-label{
+    color:white;
+}
+
+.g-input-ele{
+    width: 100%;
+    height: 4vh;
+    border:0.1rem solid #4e0eff;
+    background-color: transparent;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.g-input-ele:focus{
+   border :0.1rem solid #997af0;
+   outline: none;
+}
