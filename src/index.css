@@ -34,9 +34,22 @@ body{
     background-color: transparent;
     padding: 1rem;
     font-size: 1rem;
+    color:white;
 }
 
 .g-input-ele:focus{
    border :0.1rem solid #997af0;
    outline: none;
 }
+
+.error-msg{
+    color:red !important;
+    font-size: 8px;
+    font-weight: 400;
+    text-transform: capitalize !important;
+}
+
+
+.Toastify__toast-container {
+    z-index: 9999 !important;
+  }

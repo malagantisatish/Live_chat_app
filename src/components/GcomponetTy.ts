@@ -6,6 +6,7 @@ export interface GInputTy{
     id:string,
     type:string
     value:string
+    error?:string | null
 }
 
 export interface FormTy{
