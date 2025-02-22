@@ -1,29 +1,40 @@
-import React, { ChangeEvent, SetStateAction, useState } from 'react'
+import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react'
 import styled from "styled-components"
 import InputEl from '../components/GlobalInputs/InputEl.tsx'
 import { FormTy } from '../components/GcomponetTy'
-import { Link } from 'react-router-dom'
-import Logo from "../assets/logo.svg";
+import { Link, useNavigate } from 'react-router-dom'
 import { toast,  } from 'react-toastify'
+import axios from 'axios'
+import { registrationRoute } from '../utilities/APIRoutes.tsx'
+import logo from "../assets/logo.svg";
+
 
 const Registration = () => {
   const [formDetails,setFormDetails] = useState<FormTy>({username:"",email:"",password:"",confirmPassword:""})
   const [error,setError] = useState<FormTy>({} as FormTy)
+  const navigate = useNavigate()
+
+useEffect(()=>{
+  if (localStorage.getItem("chat_app_user")){
+    navigate("/")
+  }
+},[])
 
 
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const {name,value} = e.target
     setFormDetails(prev=>({...prev,[name]:value}))
     if (error && error[name]){
-      let errorObj = {...error}
-      delete errorObj[name as keyof object]
-      setError(Object.keys(errorObj).length>0?errorObj:{} as FormTy)
+      const errorObj = error 
+      delete errorObj[name as keyof object] 
+      setError(errorObj)
     }
     
   }
 
-  const isValid=()=>{
+  const validation=():boolean=>{
     const errorObj = {} as FormTy
+    let isvalid :boolean= true
     const condtions = [
       {name:"username",condition:!formDetails.username,message:"This Field is Required"},
       {name:"email",condition:!formDetails.email,message:"This Field is Required"},
@@ -34,24 +45,41 @@ const Registration = () => {
     for (let condition of condtions){
       if (condition.condition){
         errorObj[condition.name] = condition.message
+        isvalid = false
       }
     }
 
     if (errorObj){
-      setError(errorObj)
-      return  toast.error("something went wrong")
+      setError(errorObj) 
 
     }
-    return true
+    return isvalid
 
   }
 
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
-      e.preventDefault()
-      if(isValid()){
-         // register the user
-         toast.success("Toast should appear now!");
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault()
+    const isvalid:boolean = validation()
+      if(isvalid){
+        const reqBody = {
+          username:formDetails.username,
+          email:formDetails.email,
+          password:formDetails.password
+        }
+        try{
+          const {data}:any =await  axios.post(registrationRoute,reqBody)
+          if (data.status===false){
+         return  toast.error(data.msg,{toastId:"registererr"})
+          }
+          if (data.status===true){
+            localStorage.setItem("chat_app_user",JSON.stringify(data.user))
+            navigate("/")
+          }
+
+        }catch(err:any){
+           return toast.error(err,{toastId:"registererr"})
+        }
       } 
   }
 
@@ -60,7 +88,7 @@ const Registration = () => {
     <FormContainer>
       <form onSubmit={handleSubmit}>
         <div className='brand'>
-           <img src={Logo} alt="logo"/>
+           <img src={logo} alt="logo"/>
            <h1>Snappy</h1>
         </div>
         <InputEl error={error.username} value={formDetails.username} type="text" labelname='Username' id={"username"} handleChange={handleChange}/>

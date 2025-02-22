@@ -5,6 +5,7 @@ import Registration from './pages/Registration.tsx'
 import Login from './pages/Login.tsx'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
+import SetAvatar from './pages/SetAvatar.tsx'
 
 
 
@@ -16,6 +17,7 @@ const App = () => {
     <Routes>
       <Route path='/registration' element={<Registration/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path="/set_avatar" element={<SetAvatar/>}/>
       <Route path="/chat" element={<Chat/>}/>
     </Routes>
     <div>App</div>

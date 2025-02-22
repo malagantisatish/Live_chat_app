@@ -15,3 +15,9 @@ email:string;
 password:string;
 confirmPassword:string
 }
+
+export interface LoginTy{
+    username:string;
+    password:string;
+
+}
