@@ -53,3 +53,25 @@ body{
 .Toastify__toast-container {
     z-index: 9999 !important;
   }
+
+
+.avatar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title-container{
+
+}
+
+.img-list{
+    list-style: none;
+
+}
+
+.img-item{
+    height: 5vh;
+    width: 5vh;
+}

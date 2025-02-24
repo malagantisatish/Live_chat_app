@@ -13,7 +13,7 @@ const Registration = () => {
   const [formDetails,setFormDetails] = useState<LoginTy>({username:"",password:""})
   const [error,setError] = useState<LoginTy>({} as LoginTy)
   const navigate = useNavigate()
-
+ 
   useEffect(()=>{
     if (localStorage.getItem("chat_app_user")){
       navigate("/")
